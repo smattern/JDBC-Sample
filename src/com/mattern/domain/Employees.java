@@ -15,6 +15,7 @@ public class Employees {
 
     private Gender gender;
 
+    // one to one (1:1)
     private Salaries salaries;
 
     public String getFirstName() {

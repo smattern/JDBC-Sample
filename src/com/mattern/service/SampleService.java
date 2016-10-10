@@ -1,9 +1,12 @@
 package com.mattern.service;
 
+import com.mattern.domain.Employees;
 import com.mattern.repository.EmployeesRepository;
 import com.mattern.repository.connection.ConnectionHandling;
 import com.mattern.repository.impl.EmployeesRepositoryImpl;
 
+import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -18,16 +21,26 @@ public class SampleService {
     /**
      * Do same action.
      */
-    public void doSampleAction(){
+    public void doSampleAction() {
         ConnectionHandling conn = new ConnectionHandling();
-        employeesRepository = new EmployeesRepositoryImpl(conn);
+        conn.beginConnection();
+        EmployeesRepository repository = new EmployeesRepositoryImpl(conn);
+        ArrayList<Employees> resultList = repository.getEmployeeByName("Max");
+
+        for (Employees employees : resultList) {
+            log.log(Level.INFO,
+                    employees.getFirstName() + ", "
+                            + employees.getLastName() + ", "
+                            + employees.getSalaries().getSalary());
+        }
+        conn.endConnection();
 
     }// end method
 
     /**
      * Aux.
      */
-    private void showRecords(String name){
+    private void showRecords(String name) {
 
     }// end method
 }
