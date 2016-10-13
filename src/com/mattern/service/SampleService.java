@@ -1,6 +1,7 @@
 package com.mattern.service;
 
 import com.mattern.domain.Employees;
+import com.mattern.enumeration.Gender;
 import com.mattern.repository.EmployeesRepository;
 import com.mattern.repository.connection.ConnectionHandling;
 import com.mattern.repository.impl.EmployeesRepositoryImpl;
@@ -24,15 +25,22 @@ public class SampleService {
     public void doSampleAction() {
         ConnectionHandling conn = new ConnectionHandling();
         conn.beginConnection();
-        EmployeesRepository repository = new EmployeesRepositoryImpl(conn);
-        ArrayList<Employees> resultList = repository.getEmployeeByName("Max");
+        employeesRepository = new EmployeesRepositoryImpl(conn);
+        ArrayList<Employees> resultList = employeesRepository.getEmployeeByName("Max");
 
-        for (Employees employees : resultList) {
-            log.log(Level.INFO,
-                    employees.getFirstName() + ", "
-                            + employees.getLastName() + ", "
-                            + employees.getSalaries().getSalary());
-        }
+        showRecords(resultList);
+
+        // Insert into
+        Employees emp = new Employees();
+        emp.setFirstName("Max");
+        emp.setLastName("Mustermann");
+        emp.setGender(Gender.M);
+        employeesRepository.insertNewEmployee(emp);
+
+        ArrayList<Employees> insertResult = employeesRepository.getEmployeeByName("Max");
+
+        showRecords(insertResult);
+
         conn.endConnection();
 
     }// end method
@@ -40,7 +48,12 @@ public class SampleService {
     /**
      * Aux.
      */
-    private void showRecords(String name) {
-
+    private void showRecords(ArrayList<Employees> list) {
+        for (Employees employees : list) {
+            log.log(Level.INFO,
+                    employees.getFirstName() + ", "
+                            + employees.getLastName() + ", "
+                            + employees.getSalaries().getSalary());
+        }
     }// end method
 }

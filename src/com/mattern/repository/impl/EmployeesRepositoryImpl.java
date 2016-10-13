@@ -74,7 +74,17 @@ public class EmployeesRepositoryImpl implements EmployeesRepository{
 
     @Override
     public void insertNewEmployee(Employees emp) {
+        String query = "INSERT INTO Employees (first_name, last_name, gender) VALUES (" + "\"" + emp.getFirstName() + "\",\""
+                + emp.getLastName() + "\",\""
+                + emp.getGender() + "\""
+                + ");";
 
+        try {
+            Statement stmt = conn.getConnection().createStatement();
+            stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
