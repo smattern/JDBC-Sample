@@ -2,6 +2,8 @@ package com.mattern.domain;
 
 import com.mattern.enumeration.Gender;
 
+import java.util.ArrayList;
+
 /**
  * smattern on 09/10/16.
  */
@@ -15,8 +17,8 @@ public class Employees {
 
     private Gender gender;
 
-    // one to one (1:1)
-    private Salaries salaries;
+    // one to many (1:n)
+    private ArrayList<Salaries> salaries;
 
     public String getFirstName() {
         return firstName;
@@ -50,11 +52,11 @@ public class Employees {
         this.id = id;
     }
 
-    public Salaries getSalaries() {
+    public ArrayList<Salaries> getSalaries() {
         return salaries;
     }
 
-    public void setSalaries(Salaries salaries) {
+    public void setSalaries(ArrayList<Salaries> salaries) {
         this.salaries = salaries;
     }
 }

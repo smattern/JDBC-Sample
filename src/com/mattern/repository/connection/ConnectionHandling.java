@@ -3,12 +3,15 @@ package com.mattern.repository.connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * smattern on 09/10/16.
  */
 public class ConnectionHandling {
 
+    private static final Logger LOG = Logger.getLogger(ConnectionHandling.class.getSimpleName());
     private Connection conn;
 
     /**
@@ -31,7 +34,7 @@ public class ConnectionHandling {
             conn = DriverManager.
                     getConnection("jdbc:mysql://localhost:3306/SENDatabase?user=dev&password=dev&useSSL=false");
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+            LOG.log(Level.INFO, "BUG!!!" + e.getMessage());
         }
     }
 
